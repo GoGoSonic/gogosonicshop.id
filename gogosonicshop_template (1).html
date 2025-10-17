@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GoGoSonicSHOP — Toko Digital</title>
+  <style>
+    :root{
+      --blue-1:#0ea5e9;
+      --blue-2:#3b82f6;
+      --bg: #0f172a;
+      --card:#0b1220;
+      --glass: rgba(255,255,255,0.04);
+      --accent:#06b6d4;
+      color-scheme: dark;
+      color: #e6eef8;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,var(--bg) 0%, #071029 100%);padding:24px}
+    header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo .mark{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--blue-1),var(--blue-2));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(59,130,246,0.18);transform:rotate(-10deg)}
+    .logo .mark h1{margin:0;font-size:22px;color:white;letter-spacing:0.5px}
+    .title{animation: float 3s ease-in-out infinite;}
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+
+    .hero{background:linear-gradient(90deg, rgba(59,130,246,0.12), rgba(14,165,233,0.06));border-radius:14px;padding:18px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+    .hero-left{max-width:640px}
+    .hero h2{margin:0 0 6px 0;font-size:20px}
+    .hero p{margin:0 0 12px 0;color:#cfe9ff}
+    .cta{display:flex;gap:10px}
+    .btn{background:linear-gradient(90deg,var(--blue-2),var(--blue-1));padding:10px 14px;border-radius:10px;color:white;border:0;cursor:pointer;font-weight:600;box-shadow:0 8px 30px rgba(14,165,233,0.12)}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+
+    .controls{display:flex;gap:8px;align-items:center}
+    .search{padding:10px 12px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.03);min-width:220px;color:inherit}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px}
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);backdrop-filter:blur(6px)}
+    .card h3{margin:0 0 8px 0;font-size:16px}
+    .variants{display:flex;flex-direction:column;gap:8px}
+    .variant{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.0));border:1px solid rgba(255,255,255,0.02)}
+    .price{font-weight:700}
+    .info{font-size:13px;color:#cbe8ff}
+    .buy{padding:8px 10px;border-radius:8px;border:0;cursor:pointer;background:var(--accent);color:#002;font-weight:700}
+
+    .rating{margin-top:10px;display:flex;gap:8px;align-items:center}
+    .stars{color:#ffd166}
+
+    footer{margin-top:24px;text-align:center;color:#9fbfe6}
+
+    /* responsive */
+    @media (max-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
+    @media (max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}header{flex-direction:column;align-items:flex-start}.hero{flex-direction:column;align-items:flex-start}}
+    @media (max-width:480px){.grid{grid-template-columns:repeat(1,1fr)} .logo .mark{width:52px;height:52px}}
+
+    /* small animations */
+    .card:hover{transform:translateY(-6px);transition:transform 220ms}
+    .badge{background:linear-gradient(90deg,var(--blue-2),var(--blue-1));padding:6px 8px;border-radius:10px;font-weight:700}
+
+    /* review area */
+    .reviews{margin-top:18px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:12px;border-radius:10px}
+    .review-item{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.02);margin-bottom:8px}
+    .small{font-size:13px;color:#cbe8ff}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="mark"><h1>GGS</h1></div>
+      <div class="title">
+        <div style="font-weight:800;font-size:18px">GoGoSonicSHOP</div>
+        <div style="font-size:13px;color:#a6d8ff">Toko akun & layanan digital — kreatif & cepat</div>
+      </div>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+      <div class="controls">
+        <input id="search" class="search" placeholder="Cari produk, contoh: Netflix, VPN...">
+        <select id="sort" class="search">
+          <option value="popular">Urut: Popular</option>
+          <option value="az">A → Z</option>
+          <option value="price">Harga naik</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-left">
+      <h2>Promo Hari Ini — Diskon & Paket Sharing</h2>
+      <p>Nikmati layanan premium dengan harga terjangkau. Pilih paket private atau sharing, lalu pesan langsung lewat WhatsApp.</p>
+      <div class="cta">
+        <button class="btn" onclick="scrollToProducts()">Lihat Produk</button>
+        <button class="btn ghost" onclick="openWhatsApp('', '')">Pesan Umum via WhatsApp</button>
+      </div>
+    </div>
+    <div style="min-width:220px;text-align:right">
+      <div class="badge">Buka: 12.00 - 13.00 (Senin-Jumat)</div>
+      <div style="margin-top:10px;font-size:13px;color:#cfe9ff">Hubungi: <strong id="wa-number">083870743757</strong></div>
+    </div>
+  </section>
+
+  <main>
+    <div id="product-grid" class="grid" style="margin-top:18px"></div>
+
+    <section class="reviews">
+      <h3>Ulasan Pelanggan</h3>
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+        <input id="rev-name" placeholder="Nama (opsional)" class="search" style="min-width:160px">
+        <input id="rev-product" placeholder="Produk (contoh: Netflix Premium)" class="search" style="min-width:240px">
+        <select id="rev-rating" class="search" style="min-width:120px">
+          <option value="5">★★★★★ (5)</option>
+          <option value="4">★★★★ (4)</option>
+          <option value="3">★★★ (3)</option>
+          <option value="2">★★ (2)</option>
+          <option value="1">★ (1)</option>
+        </select>
+        <button class="btn" onclick="addReview()">Kirim Ulasan</button>
+      </div>
+      <div id="reviews-list" style="margin-top:12px"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    GoGoSonicSHOP © 2025 — Pesan lewat WhatsApp: <a id="wa-link" href="#" style="color:inherit;text-decoration:underline">083870743757</a>
+  </footer>
+
+  <script>
+    // NOTE: jika ingin ubah nomor WhatsApp, edit WA_NUMBER di bawah (format lokal tanpa +62)
+    const WA_NUMBER = '6283870743757'; // gunakan 62... (ganti jika perlu)
+    document.getElementById('wa-number').innerText = '083870743757';
+    document.getElementById('wa-link').href = 'https://wa.me/' + WA_NUMBER;
+
+    // Data produk (diisi berdasarkan daftar yang kamu kirim) ---
+    const PRODUCTS = [
+      {name: 'WeTV Premium', variants:[{type:'Private',price:'Rp45.000 / 1 Bulan'},{type:'Sharing',price:'Rp20.000 / 1 Bulan'}]},
+      {name: 'iQIYI Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Tahun'},{type:'Private',price:'Rp45.000 / 1 Bulan'}]},
+      {name: 'Terabox Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Tahun'}]},
+      {name: 'Express VPN Premium', variants:[{type:'Private',price:'Rp12.000 / 7 Hari'},{type:'Private',price:'Rp20.000 / 1 Bulan'},{type:'Sharing',price:'Rp10.000 / 1 Bulan'}]},
+      {name: 'Alight Motion Pro', variants:[{type:'Private',price:'Rp20.000 / 1 Tahun'}]},
+      {name: 'Netflix Premium', variants:[{type:'Private',price:'Rp50.000 / 1 Bulan'},{type:'Sharing',price:'Rp25.000 / 1 Bulan'}]},
+      {name: 'Apple Music Premium', variants:[{type:'Indplan',price:'Rp20.000 / 1 Bulan'},{type:'Invite Family',price:'Rp20.000 / 3 Bulan'},{type:'Family Head',price:'Rp35.000 / 3 Bulan'}]},
+      {name: 'Capcut Pro', variants:[{type:'Sharing',price:'Rp20.000 / 1 Bulan'},{type:'Private',price:'Rp40.000 / 1 Bulan'}]},
+      {name: 'Canva Pro', variants:[{type:'Invite',price:'Rp2.500 / 1 Bulan'},{type:'Invite',price:'Rp20.000 / 1 Tahun'},{type:'Head',price:'Rp18.000 / 1 Bulan'}]},
+      {name: 'WPS Office Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Tahun'}]},
+      {name: 'Pacdora Premium', variants:[{type:'1 Bulan',price:'Rp20.000 / 1 Bulan'},{type:'2 Bulan',price:'Rp30.000 / 2 Bulan'}]},
+      {name: 'Blackbox AI Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Bulan'}]},
+      {name: 'AI PPT Pro', variants:[{type:'Sharing',price:'Rp35.000 / Bulan'}]},
+      {name: 'Jenni AI Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Bulan'}]},
+      {name: 'Prime Video Premium', variants:[{type:'Sharing',price:'Rp10.000 / 1 Bulan'},{type:'Private',price:'Rp20.000 / 1 Bulan'}]},
+      {name: 'Crunchyroll Premium', variants:[{type:'Sharing',price:'Rp15.000 / 1 Bulan'},{type:'Sharing',price:'Rp25.000 / 1 Tahun'}]},
+      {name: 'Gamma App Premium', variants:[{type:'Sharing',price:'Rp25.000 / 1 Bulan'}]},
+      {name: 'Kahoot! Premium (400 Peserta)', variants:[{type:'Sharing',price:'Rp40.000 / 1 Bulan'},{type:'Private',price:'Rp20.000 / 7 Hari'}]},
+      {name: 'Consensus AI Premium', variants:[{type:'Sharing',price:'Rp17.000 / 1 Bulan'}]},
+      {name: 'Duolingo Premium', variants:[{type:'Invite Family',price:'Rp20.000 / 14 Hari'},{type:'Head Family',price:'Rp25.000 / 14 Hari'}]},
+      {name: 'Claude AI Premium', variants:[{type:'Sharing',price:'Rp45.000 / 1 Bulan'}]},
+      {name: 'Copy AI Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Bulan'}]},
+      {name: 'Viu Premium 1B', variants:[{type:'Private',price:'Rp8.000 / 1 Tahun'},{type:'Sharing',price:'Rp25.000 / 1 Tahun'}]},
+      {name: 'HMA VPN Premium', variants:[{type:'Private',price:'Rp20.000 / 1 Bulan'},{type:'Sharing',price:'Rp15.000 / 1 Bulan'}]},
+      {name: 'Vision+ Plus Premium', variants:[{type:'Private',price:'Rp35.000 / 1 Bulan'},{type:'Sharing',price:'Rp25.000 / 1 Bulan'}]},
+      {name: 'Remini Premium', variants:[{type:'Sharing',price:'Rp25.000 / 1 Bulan'},{type:'Private',price:'Rp20.000 / 7 Hari'}]},
+      {name: 'Scite AI Premium', variants:[{type:'Sharing',price:'Rp25.000 / 1 Bulan'},{type:'Private',price:'Rp20.000 / 7 Hari'}]},
+      {name: 'GetContact Premium', variants:[{type:'Private',price:'Rp17.000 / 1 Bulan'}]},
+      {name: 'Mega NZ 16 TB Premium', variants:[{type:'Sharing',price:'Rp45.000 / 1 Tahun'}]},
+      {name: 'Beautiful AI Premium', variants:[{type:'Sharing',price:'Rp25.000 / 1 Bulan'}]},
+      {name: 'ChatGPT Plus Premium', variants:[{type:'Sharing',price:'Rp40.000 / 1 Bulan'}]},
+      {name: 'Grammarly Premium', variants:[{type:'Sharing',price:'Rp17.000 / 1 Bulan'},{type:'Sharing',price:'Rp35.000 / 1 Tahun'},{type:'Private',price:'Rp60.000 / 1 Bulan'}]},
+      {name: 'IPVanish VPN Premium', variants:[{type:'Private',price:'Rp20.000 / 7 Hari'},{type:'Sharing',price:'Rp35.000 / 1 Bulan'}]},
+      {name: 'TiviMate IPTV Premium Lifetime (Playlist & APK)', variants:[{type:'Lifetime',price:'Rp19.900'}]},
+      {name: 'PhotoRoom Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Tahun'}]},
+      {name: 'Lightroom Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Tahun'}]},
+      {name: 'Wattpad Premium', variants:[{type:'Sharing',price:'Rp22.000 / 1 Tahun'}]},
+      {name: 'Bstation Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Bulan'},{type:'Sharing',price:'Rp35.000 / 1 Tahun'},{type:'Private',price:'Rp40.000 / 1 Bulan'}]},
+      {name: 'Scribd Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Tahun'},{type:'Private',price:'Rp15.000 / 1 Bulan'}]},
+      {name: 'Goodnotes Premium', variants:[{type:'Sharing',price:'Rp25.000 / 1 Tahun'}]},
+      {name: 'HBO GO / HBO MAX Premium', variants:[{type:'Sharing',price:'Rp25.000 / 1 Bulan'},{type:'Private',price:'Rp65.000 / 1 Bulan'}]},
+      {name: 'Prezi Premium', variants:[{type:'Private',price:'Rp25.000 / 14 Hari'}]},
+      {name: 'Qobuz Premium', variants:[{type:'Private',price:'Rp22.000 / 1 Bulan'}]},
+      {name: 'Fotor Pro', variants:[{type:'Private',price:'Rp20.000 / 7 Hari'},{type:'Sharing',price:'Rp40.000 / 1 Bulan'}]},
+      {name: 'Envato Elements Premium', variants:[{type:'Private (Small)',price:'Rp65.000 / 1 Bulan'},{type:'Private (Medium)',price:'Rp80.000 / 1 Bulan'},{type:'Private (High)',price:'Rp140.000 / 1 Bulan'}]},
+      {name: 'DeepL Pro Advanced + Write Pro', variants:[{type:'Sharing',price:'Rp22.000 / 1 Bulan'},{type:'Private',price:'Rp27.000 / 1 Bulan'}]},
+      {name: 'Quillbot Premium', variants:[{type:'Sharing',price:'Rp25.000 / 1 Tahun'}]},
+      {name: 'Linktree Premium', variants:[{type:'Private',price:'Rp45.000 / 1 Bulan'}]},
+      {name: 'Chat PDF / Chat PDF Premium', variants:[{type:'Sharing',price:'Rp17.000 / 1 Bulan'}]},
+      {name: 'BioRender Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Bulan'}]},
+      {name: 'Academia EDU Premium', variants:[{type:'Sharing',price:'Rp19.900 / 1 Tahun'}]},
+      {name: 'VSCO X Fullpack Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Tahun'}]},
+      {name: 'Skillshare Premium', variants:[{type:'Sharing',price:'Rp20.000 / 2 Bulan'}]},
+      {name: 'Elicit Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Bulan'},{type:'Sharing',price:'Rp40.000 / 1 Tahun'}]},
+      {name: 'PicsArt Pro Premium', variants:[{type:'Sharing',price:'Rp15.000 / 1 Bulan'},{type:'Private',price:'Rp20.000 / 1 Bulan'}]},
+      {name: 'CatchPlay+ Premium', variants:[{type:'Sharing',price:'Rp40.000 / 1 Tahun'},{type:'Private',price:'Rp40.000 / 1 Bulan'}]},
+      {name: 'Scispace Typeset Premium', variants:[{type:'Sharing',price:'Rp25.000 / 1 Bulan'}]},
+      {name: 'Humata AI Premium', variants:[{type:'Sharing',price:'Rp17.000 / 1 Bulan'}]},
+      {name: 'Mola TV / MolaTV Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Bulan'},{type:'Private',price:'Rp45.000 / 1 Bulan'}]},
+      {name: 'Ultimate Guitar Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Bulan'}]},
+      {name: 'SmallPDF / Small PDF Premium', variants:[{type:'Sharing',price:'Rp40.000 / 1 Bulan'},{type:'Private',price:'Rp20.000 / 7 Hari'}]},
+      {name: 'Quizizz Super Premium', variants:[{type:'Sharing',price:'Rp50.000 / 1 Bulan'},{type:'Private',price:'Rp25.000 / 7 Hari'}]},
+      {name: 'Bein Sport Premium', variants:[{type:'Sharing',price:'Rp25.000 / 1 Bulan'}]},
+      {name: 'I Love PDF / ILovePDF Premium', variants:[{type:'Sharing',price:'Rp40.000 / 1 Tahun'}]},
+      {name: 'Deepseek Premium', variants:[{type:'Sharing',price:'Rp25.000 / 1 Bulan'}]},
+      {name: 'CamScanner Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Tahun'}]},
+      {name: 'Mediafire Pro', variants:[{type:'Private',price:'Rp40.000 / 1 Bulan'}]},
+      {name: 'Gemini AI Pro Premium', variants:[{type:'Private',price:'Rp15.000 / 1 Bulan'}]},
+      {name: 'Tunnelbear VPN Premium', variants:[{type:'100 GB (Private)',price:'Rp20.000 / 1 Bulan'}]},
+      {name: 'WeMod Premium', variants:[{type:'Sharing',price:'Rp40.000 / 1 Bulan'}]},
+      {name: 'Connected Papers Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Tahun'}]},
+      {name: 'Ott Navigator IPTV Premium Lifetime (Playlist & APK)', variants:[{type:'Lifetime',price:'Rp24.900'}]},
+      {name: 'SlideShare Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Tahun'}]},
+      {name: 'VidVoicer Premium Lifetime', variants:[{type:'Lifetime',price:'Rp19.900'}]},
+      {name: 'Miro Premium', variants:[{type:'Private',price:'Rp150.000 / 2 Tahun'}]},
+      {name: 'AI Video Pro Agency', variants:[{type:'Sharing',price:'Rp20.000 / 1 Tahun'}]},
+      {name: 'WriteHuman Premium', variants:[{type:'Sharing',price:'Rp40.000 / 1 Bulan'}]},
+      {name: 'Tidal HIFI Master Premium', variants:[{type:'Private',price:'Rp17.000 / 1 Bulan'}]},
+      {name: 'Avira Phantom VPN Premium', variants:[{type:'Private',price:'Rp20.000 / 3 Bulan'}]},
+      {name: 'Perplexity Premium', variants:[{type:'Sharing',price:'Rp35.000 / 1 Bulan'}]},
+      {name: 'Everand Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Tahun'}]},
+      {name: 'Vecteezy Premium', variants:[{type:'Sharing',price:'Rp70.000 / 1 Bulan'}]},
+      {name: 'Keywordtool / Keywordtool.io Premium', variants:[{type:'Sharing',price:'Rp120.000 / 1 Bulan'}]},
+      {name: 'Hootsuite Premium', variants:[{type:'Pro [10 Profile]',price:'Rp25.000 / 1 Bulan'},{type:'Team [20 Profile]',price:'Rp40.000 / 1 Bulan'}]},
+      {name: 'Wolfram Alpha Pro Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Bulan'}]},
+      {name: 'Paperpal Premium', variants:[{type:'Sharing',price:'Rp17.000 / 1 Bulan'}]},
+      {name: 'Symbolab Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Tahun'}]},
+      {name: 'Mathway Premium', variants:[{type:'Sharing',price:'Rp40.000 / 1 Tahun'}]},
+      {name: 'Amboos Premium', variants:[{type:'Sharing',price:'Rp25.000 / 1 Bulan'}]},
+      {name: 'Cookpad Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Bulan'}]},
+      {name: 'Drakor ID Premium 1 Tahun', variants:[{type:'Sharing',price:'Rp20.000 / 1 Tahun'}]},
+      {name: 'Disney+ Hotstar', variants:[{type:'Private',price:'Rp100.000 / 1 Bulan'}]},
+      {name: 'Spotify Premium', variants:[{type:'Info',price:'[Bukan punya Admin jadi harga bisa berubah — tanya via WhatsApp]'}]},
+      {name: 'Lingokids Premium', variants:[{type:'Sharing',price:'Rp40.000 / 1 Bulan'},{type:'Private',price:'Rp60.000 / 1 Bulan'}]},
+      {name: 'Quizlet Premium', variants:[{type:'Private',price:'Rp30.000 / 1 Bulan'}]},
+      {name: 'CodeCademy Premium', variants:[{type:'Sharing',price:'Rp35.000 / 1 Bulan'}]},
+      {name: 'I Love IMG Premium', variants:[{type:'Sharing',price:'Rp40.000 / 1 Tahun'}]},
+      {name: 'Xodo PDF Premium', variants:[{type:'Sharing',price:'Rp30.000 / 1 Bulan'}]},
+      {name: 'Epidemic Sound Premium', variants:[{type:'Personal',price:'Rp90.000 / 1 Bulan'},{type:'Commercial',price:'Rp130.000 / 1 Bulan'}]},
+      {name: 'Yousician Premium', variants:[{type:'Sharing',price:'Rp40.000 / 1 Bulan'}]},
+      {name: 'Napster Premium', variants:[{type:'Private',price:'Rp17.000 / 1 Bulan'}]},
+      {name: 'Deezer Premium', variants:[{type:'Individual',price:'Rp25.000 / 1 Bulan'},{type:'Family',price:'Rp40.000 / 1 Bulan'}]},
+      {name: 'Youku Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Bulan'},{type:'Private',price:'Rp45.000 / 1 Bulan'}]},
+      {name: 'Mubi Premium', variants:[{type:'Sharing',price:'Rp65.000 / 1 Tahun'},{type:'Private',price:'Rp50.000 / 1 Bulan'}]},
+      {name: 'Paramount Plus Premium', variants:[{type:'Sharing',price:'Rp55.000 / 1 Bulan'}]},
+      {name: 'Apple Arcade Premium', variants:[{type:'Redeem Code',price:'Rp40.000 / 3 Bulan'}]},
+      {name: 'Moboreels Premium', variants:[{type:'Sharing',price:'Rp25.000 / 1 Bulan'}]},
+      {name: 'Renderforest Premium', variants:[{type:'Standard',price:'Rp135.000 / 1 Bulan'}]},
+      {name: 'InVideo Studio Premium', variants:[{type:'Sharing',price:'Rp20.000 / 1 Tahun'},{type:'Private',price:'Rp25.000 / 1 Tahun'}]},
+      {name: 'Uizard Io Premium', variants:[{type:'Sharing',price:'Rp30.000 / 1 Bulan'},{type:'Private',price:'Rp60.000 / 1 Bulan'}]},
+      {name: 'Unfold Premium', variants:[{type:'Sharing',price:'Rp25.000 / 1 Tahun'}]},
+      {name: 'Motion Array Premium', variants:[{type:'Sharing',price:'Rp55.000 / 1 Bulan'}]},
+      {name: 'Freepik Premium', variants:[{type:'Private (Small)',price:'Rp90.000 / 1 Bulan'},{type:'Private (High)',price:'Rp155.000 / 1 Bulan'}]},
+      {name: 'Figma Pro Education', variants:[{type:'Invite Private',price:'Rp55.000 / 2 Tahun'}]},
+      {name: 'Jasper AI Premium', variants:[{type:'Sharing',price:'Rp110.000 / 1 Bulan'},{type:'Private',price:'Rp65.000 / 20 Hari'}]},
+      {name: 'Wordtune AI Premium', variants:[{type:'Sharing',price:'Rp25.000 / 1 Bulan'}]},
+      {name: 'TabNine AI Premium', variants:[{type:'Private',price:'Rp25.000 / 1 Bulan'}]},
+      {name: 'Pop AI Premium', variants:[{type:'Sharing',price:'Rp17.000 / 1 Bulan'}]},
+      {name: 'Genei AI Premium', variants:[{type:'Private',price:'Rp45.000 / 14 Hari'},{type:'Sharing',price:'Rp45.000 / 1 Bulan'}]},
+      {name: 'Blinkist Premium', variants:[{type:'Private',price:'Rp25.000 / 1 Bulan'}]},
+      {name: 'Aithor Premium', variants:[{type:'Sharing',price:'Rp55.500 / 1 Tahun'}]},
+      {name: 'Julius AI Premium', variants:[{type:'Sharing',price:'Rp35.000 / 1 Bulan'}]},
+      {name: 'Hix AI Premium', variants:[{type:'Sharing',price:'Rp35.000 / 1 Bulan'}]},
+      {name: 'YouTube Premium', variants:[{type:'Info',price:'[Harga berubah — tanyakan via WhatsApp]'}]},
+    ];
+
+    // Render products
+    const grid = document.getElementById('product-grid');
+    function render(list){
+      grid.innerHTML = '';
+      list.forEach((p, idx)=>{
+        const card = document.createElement('div'); card.className='card';
+        const h = document.createElement('h3'); h.innerText = p.name; card.appendChild(h);
+        const info = document.createElement('div'); info.className='info'; info.innerText = p.variants.map(v=>v.type+" — "+v.price).join(' • ');
+        card.appendChild(info);
+
+        const variants = document.createElement('div'); variants.className='variants';
+        p.variants.forEach(v=>{
+          const row = document.createElement('div'); row.className='variant';
+          const left = document.createElement('div'); left.innerHTML = `<div style=\"font-weight:700\">${v.type}</div><div class=\"small\">${v.price}</div>`;
+          const right = document.createElement('div');
+          const btn = document.createElement('button'); btn.className='buy'; btn.innerText='Pesan';
+          btn.onclick = ()=> openWhatsApp(p.name, v.type+ ' — ' + v.price);
+          right.appendChild(btn);
+          row.appendChild(left); row.appendChild(right); variants.appendChild(row);
+        });
+
+        const rating = document.createElement('div'); rating.className='rating'; rating.innerHTML = `<div class=\"stars\">★★★★★</div><div class=\"small\">4.8 • 1.2k transaksi</div>`;
+        card.appendChild(variants);
+        card.appendChild(rating);
+        grid.appendChild(card);
+      });
+    }
+    render(PRODUCTS);
+
+    // search & sort
+    document.getElementById('search').addEventListener('input', e=>{
+      const q = e.target.value.toLowerCase();
+      const filtered = PRODUCTS.filter(p=> p.name.toLowerCase().includes(q) || p.variants.some(v=>v.type.toLowerCase().includes(q) || v.price.toLowerCase().includes(q)));
+      render(filtered);
+    });
+    document.getElementById('sort').addEventListener('change', e=>{
+      const val = e.target.value;
+      let arr = [...PRODUCTS];
+      if(val==='az') arr.sort((a,b)=> a.name.localeCompare(b.name));
+      if(val==='price') arr.sort((a,b)=> a.name.localeCompare(b.name)); // fallback: keep alphabetical
+      render(arr);
+    });
+
+    function openWhatsApp(productName, variantText){
+      const base = 'https://wa.me/' + WA_NUMBER;
+      const text = `Halo%20GoGoSonicSHOP%2C%20saya%20mau%20pesan%20%3A%20${encodeURIComponent(productName)}%20${encodeURIComponent(variantText)}.`;
+      window.open(base + '?text=' + text, '_blank');
+    }
+
+    function scrollToProducts(){ window.scrollTo({top: document.querySelector('#product-grid').offsetTop - 16, behavior:'smooth'}) }
+
+    // reviews (simple localStorage)
+    function getReviews(){ try{ return JSON.parse(localStorage.getItem('ggs_reviews')||'[]')}catch(e){return []}}
+    function saveReviews(arr){ localStorage.setItem('ggs_reviews', JSON.stringify(arr)); }
+    function addReview(){
+      const name = document.getElementById('rev-name').value.trim() || 'Anonim';
+      const product = document.getElementById('rev-product').value.trim() || '-';
+      const rating = document.getElementById('rev-rating').value;
+      const reviews = getReviews();
+      reviews.unshift({name,product,rating,when: new Date().toLocaleString()});
+      saveReviews(reviews);
+      renderReviews();
+      document.getElementById('rev-name').value=''; document.getElementById('rev-product').value='';
+    }
+    function renderReviews(){
+      const container = document.getElementById('reviews-list'); container.innerHTML='';
+      const reviews = getReviews();
+      if(reviews.length===0){ container.innerHTML='<div class="small">Belum ada ulasan. Jadilah yang pertama!</div>'; return }
+      reviews.slice(0,30).forEach(r=>{
+        const item = document.createElement('div'); item.className='review-item';
+        item.innerHTML = `<div style=\"font-weight:700\">${r.name} <span style=\"font-weight:500;color:#9fbfe6\">• ${r.product}</span></div><div class=\"small\">Rating: ${'★'.repeat(r.rating)} • ${r.when}</div>`;
+        container.appendChild(item);
+      });
+    }
+    renderReviews();
+
+  </script>
+</body>
+</html>
